@@ -4,15 +4,19 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.Null;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.function.ServerRequest.Headers;
 
 import com.example.JPAGRADLE.pojo.Employee;
 import com.example.JPAGRADLE.repo.EmpRepo;
@@ -27,7 +31,12 @@ public class Empcont {
 	private int id;
 
 	@PostMapping(value = "/create")
-	public String create(Employee emp) {
+	public ResponseEntity<?> create(Employee emp) {
+	String email = emp.getEmail();
+	if(email==null)
+	{
+		 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+	}
 		try {
 			Employee save = repo.save(emp);
 			id = save.getId();
@@ -35,11 +44,9 @@ public class Empcont {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
-			return e.getMessage();
+			 return new ResponseEntity<>(HttpStatus.METHOD_FAILURE);	
 		}
-	
-	
-		return"EMPLOYEE CREATED WITH ID:"+id;
+		 return new ResponseEntity<>(HttpStatus.CREATED);	
 	}
 	
 	
@@ -59,7 +66,7 @@ return e.getMessage();
 	
 	
 	@PutMapping("/update")
-	public String update(Employee emp)
+	public ResponseEntity<?> update(Employee emp)
 	{ 
 		Optional<Employee> empfromdb = repo.findById(emp.getId());
 		Employee uuserdb = empfromdb.get();
@@ -80,21 +87,22 @@ return e.getMessage();
 			uuserdb.setEmail(email);
 		}
 		repo.save(uuserdb);
-		return "EMPLOYEE UPDATED WITH ID:"+id;
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 		
 	
 
 	@DeleteMapping(value = "/delete")
-	public String delete(Employee emp) {
+	public ResponseEntity<?> delete(Employee emp) {
 		try {
+			
 			id=emp.getId();
 			repo.delete(emp);
 			logger.info("Employee deleted");
 		} catch (Exception e) {
 			logger.error("Error");
 		}
-		return "EMPLOYEE DELETED WITH ID:"+id;
+		 return new ResponseEntity<>(HttpStatus.ACCEPTED);	
 	}
 	
 }

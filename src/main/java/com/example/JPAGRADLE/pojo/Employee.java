@@ -5,17 +5,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(name = "employeename", nullable = false)
+	@Column(name = "employeename")
+	@NotEmpty
 	private String name;
-	@Column(name = "email", nullable = false)
+	@Email
+	@NotNull
+	@Column(name = "email")
 	private String email;
-	@Column(name = "designation", nullable = false)
+	@Column(name = "designation")
+	@NotNull
 	private String designation;
 
 	public int getId() {
