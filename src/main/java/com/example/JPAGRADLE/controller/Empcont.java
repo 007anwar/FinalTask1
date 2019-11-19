@@ -44,7 +44,7 @@ public class Empcont {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
-			 return new ResponseEntity<>(HttpStatus.METHOD_FAILURE);	
+			 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 		 return new ResponseEntity<>(HttpStatus.CREATED);	
 	}
@@ -88,6 +88,7 @@ return e.getMessage();
 		}
 		repo.save(uuserdb);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+//		return "EMPLOYEE UPDATED WITH ID:"+id;
 	}
 		
 	

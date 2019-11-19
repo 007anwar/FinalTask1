@@ -15,6 +15,8 @@ repositories {
 dependencies {
 // https://mvnrepository.com/artifact/javax.servlet/jstl
 compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
