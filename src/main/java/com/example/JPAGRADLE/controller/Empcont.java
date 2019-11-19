@@ -1,10 +1,6 @@
 package com.example.JPAGRADLE.controller;
 
-import java.sql.SQLException;
 import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.constraints.Null;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.ServerRequest.Headers;
 
 import com.example.JPAGRADLE.pojo.Employee;
 import com.example.JPAGRADLE.repo.EmpRepo;
@@ -88,7 +83,6 @@ return e.getMessage();
 		}
 		repo.save(uuserdb);
 		return new ResponseEntity<>(HttpStatus.CREATED);
-//		return "EMPLOYEE UPDATED WITH ID:"+id;
 	}
 		
 	
